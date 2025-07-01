@@ -1,103 +1,145 @@
+
 # LLM Orchestration
 
-A system for orchestrating interactions with multiple Large Language Model (LLM) instances, providing workflow management, variable substitution, and real-time execution tracking.
+A robust, modular system for orchestrating complex workflows with multiple Large Language Model (LLM) instances. Designed for data engineering and machine learning teams, it enables reusable prompt engineering, workflow chaining, and real-time execution tracking—ideal for production ML pipelines and rapid prototyping.
 
-## Project Overview
+---
 
-LLM Orchestration allows you to:
+## 🚀 Key Features
 
-- Create reusable text blocks for LLM prompts
-- Configure LLM settings for different types of requests
-- Combine blocks into payloads that can be sent to LLMs
-- Chain payloads into workflows with variable substitution
-- Execute workflows and monitor them in real-time
-- View and analyze execution results
+- **Composable Prompt Blocks:** Build reusable text blocks for LLM prompts.
+- **Configurable Payloads:** Define LLM settings (temperature, model, etc.) per request.
+- **Workflow Orchestration:** Chain payloads into multi-step workflows with variable substitution.
+- **Real-Time Execution:** Monitor workflow runs and LLM responses live via WebSocket.
+- **Rich API & UI:** Manage blocks, payloads, workflows, and runs programmatically or through the web interface.
+- **Extensible & AI-Friendly:** Modular codebase, clear documentation, and AI-context comments for rapid onboarding and extension.
 
-## Getting Started
+---
 
-### Prerequisites
+## 🏗️ Architecture Overview
 
-- Node.js 16.x or higher
-- Access to at least one LLM instance (local or remote)
+The system is built around these core concepts:
 
-### Installation
-
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/your-username/llm-orchestration.git
-   cd llm-orchestration
-   ```
-
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-
-3. Create a `.env` file in the root directory:
-   ```
-   NODE_ENV=development
-   PORT=3000
-   SIMULATE_LLM=true  # Set to 'false' in production
-   ```
-
-4. Start the server:
-   ```bash
-   npm start
-   ```
-
-5. Open the application in your browser:
-   ```
-   http://localhost:3000
-   ```
-
-## Project Structure
+- **Blocks:** Reusable text snippets for prompts
+- **Payloads:** Collections of blocks + LLM config (single LLM call)
+- **Workflows:** Ordered sequences of payloads (multi-step chains)
+- **Runs:** Execution instances of workflows, with tracked responses and metrics
 
 ```
-.
-├── config/            # Configuration files
-├── data/              # Data storage directory
-├── docs/              # Documentation files
-│   ├── schemas/       # JSON Schema definitions
-│   └── templates/     # Code templates
-├── public/            # Frontend assets
-├── routes/            # API endpoints
-├── services/          # Core services
-├── utils/             # Utility functions
-└── server.js          # Main application entry point
+Web Browser (Frontend) ⇄ Express.js (API Server) ⇄ SQLite (Database)
+                                ⇅
+                           LLM Service
 ```
 
-For a detailed breakdown of the file structure, see [filestructure.md](./filestructure.md) or the [File Structure Diagram](./docs/file-structure-diagram.md).
+- Real-time updates via WebSocket
+- Modular services for LLM communication, workflow execution, and data management
 
-## Development Guides
+See [Architecture Overview](./docs/architecture.md) for details.
 
-The project includes comprehensive guidelines for development:
+---
 
-- Code organization guidelines are available in `/docs/code-organization.md`
-- File templates for new services and routes are in `/docs/templates/`
-- ESLint configuration for code style consistency
-- Editor configuration via `.editorconfig`
+## 📂 File Structure (Visual)
 
-## Documentation
+```mermaid
+%% File structure diagram
+graph TD
+    Root["LLM Orchestration"] --> Config["config/"]
+    Root --> Data["data/"]
+    Root --> Docs["docs/"]
+    Root --> Public["public/"]
+    Root --> Routes["routes/"]
+    Root --> Services["services/"]
+    Root --> Utils["utils/"]
+    Root --> ConfigFiles["Configuration Files\n.editorconfig\n.env\n.eslintrc.js\nai-config.json"]
+    Root --> MainFiles["Main Files\npackage.json\nREADME.md\nserver.js\nfilestructure.md"]
+    Docs --> DocIndex["index.md"]
+    Docs --> DocArch["architecture.md"]
+    Docs --> DocAPI["api-reference.md"]
+    Docs --> DocDB["database.md"]
+    Docs --> DocGS["getting-started.md"]
+    Docs --> DocLLM["llm-service.md"]
+    Docs --> DocWF["workflow-execution.md"]
+    Docs --> DocCode["code-organization.md"]
+    Docs --> Schemas["schemas/"]
+    Docs --> Templates["templates/"]
+    Schemas --> SchemaIndex["index.md"]
+    Schemas --> SchemaBlocks["blocks.json"]
+    Schemas --> SchemaPayloads["payloads.json"]
+    Schemas --> SchemaPB["payload_blocks.json"]
+    Schemas --> SchemaWF["workflows.json"]
+    Schemas --> SchemaWP["workflow_payloads.json"]
+    Schemas --> SchemaRuns["runs.json"]
+    Schemas --> SchemaResp["responses.json"]
+    Schemas --> SchemaAPI["api-schemas.json"]
+    Schemas --> SchemaER["er-diagram.md"]
+    Templates --> TempService["service-template.js"]
+    Templates --> TempRoute["route-template.js"]
+    Public --> HTML["index.html"]
+    Public --> JS["js/"]
+    Public --> CSS["css/"]
+    JS --> AppJS["app.js"]
+    JS --> ApiJS["api.js"]
+    JS --> BlocksJS["blocks.js"]
+    JS --> PayloadsJS["payloads.js"]
+    JS --> WorkflowsJS["workflows.js"]
+    JS --> RunsJS["runs-manager.js"]
+    JS --> ErrorHandlerJS["error-handler.js"]
+    JS --> WorkflowPatchJS["workflow-patch.js"]
+    JS --> LLMTesterJS["llm-tester.js"]
+    JS --> DBJS["database-manager.js"]
+    CSS --> StyleCSS["style.css"]
+```
 
-Full documentation is available in the `/docs` directory:
+---
+
+## 🗄️ Database & Data Model
+
+The system uses SQLite for persistent storage. The schema is designed for extensibility and traceability:
+
+- **Blocks, Payloads, Workflows, Runs, Responses**: Each is a first-class table with clear relationships.
+- **Junction tables** for many-to-many relationships (payload_blocks, workflow_payloads).
+
+See the [Entity Relationship Diagram](./docs/schemas/er-diagram.md) and [Database Documentation](./docs/database.md) for full schema and SQL.
+
+---
+
+## 🔄 Workflow Execution
+
+Workflows are executed step-by-step, passing context and variables between LLM calls. Real-time progress and results are streamed to the UI via WebSocket.
+
+See [Workflow Execution](./docs/workflow-execution.md) for a detailed flow.
+
+---
+
+## 🧩 API Reference
+
+The system exposes a RESTful API for all resources (blocks, payloads, workflows, runs, responses).
+
+See the [API Reference](./docs/api-reference.md) for full endpoint documentation and examples.
+
+---
+
+## 🛠️ Development & Best Practices
 
 - [Getting Started Guide](./docs/getting-started.md)
+- [Code Organization](./docs/code-organization.md)
 - [Architecture Overview](./docs/architecture.md)
-- [API Reference](./docs/api-reference.md)
+- [File Structure Diagram](./docs/file-structure-diagram.md)
+- [JSON Schemas](./docs/schemas/index.md)
+
+The codebase is designed for clarity, modularity, and AI-assistant compatibility. See [ai-config.json](./ai-config.json) for project context.
+
+---
+
+## 📚 Further Documentation
+
+- [Full Documentation Index](./docs/index.md)
 - [Database Schema](./docs/database.md)
 - [LLM Service](./docs/llm-service.md)
 - [Workflow Execution](./docs/workflow-execution.md)
-- [Code Organization](./docs/code-organization.md)
-- [JSON Schemas](./docs/schemas/index.md)
+- [API Reference](./docs/api-reference.md)
 
-## AI-Friendly Development
-
-This project is designed to work well with AI coding assistants:
-
-- Clear and consistent code organization
-- Comprehensive documentation
-- AI-context comments in key files
-- [ai-config.json](./ai-config.json) with project info for AI tools
+---
 
 ## License
 
