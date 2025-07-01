@@ -1,0 +1,46 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Workflow Payload",
+  "description": "A junction table linking payloads to workflows with order information",
+  "type": "object",
+  "properties": {
+    "workflow_id": {
+      "type": "integer",
+      "description": "ID of the workflow",
+      "examples": [1, 42, 999]
+    },
+    "payload_id": {
+      "type": "integer",
+      "description": "ID of the payload",
+      "examples": [1, 42, 999]
+    },
+    "order_index": {
+      "type": "integer",
+      "description": "Position of the payload within the workflow (0-based index)",
+      "minimum": 0,
+      "examples": [0, 1, 2]
+    }
+  },
+  "required": ["workflow_id", "payload_id", "order_index"],
+  "additionalProperties": false,
+  "database": {
+    "table": "workflow_payloads",
+    "sql": "CREATE TABLE IF NOT EXISTS workflow_payloads (workflow_id INTEGER, payload_id INTEGER, order_index INTEGER, FOREIGN KEY (workflow_id) REFERENCES workflows (id) ON DELETE CASCADE, FOREIGN KEY (payload_id) REFERENCES payloads (id) ON DELETE CASCADE)",
+    "constraints": [
+      "FOREIGN KEY (workflow_id) REFERENCES workflows (id) ON DELETE CASCADE",
+      "FOREIGN KEY (payload_id) REFERENCES payloads (id) ON DELETE CASCADE"
+    ]
+  },
+  "examples": [
+    {
+      "workflow_id": 1,
+      "payload_id": 1,
+      "order_index": 0
+    },
+    {
+      "workflow_id": 1,
+      "payload_id": 2,
+      "order_index": 1
+    }
+  ]
+}

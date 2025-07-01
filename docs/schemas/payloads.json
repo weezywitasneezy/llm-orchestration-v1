@@ -1,0 +1,93 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Payload",
+  "description": "A collection of blocks with LLM configuration that defines a single LLM interaction",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "Unique identifier for the payload (auto-generated)",
+      "examples": [1, 42, 999]
+    },
+    "name": {
+      "type": "string",
+      "description": "Name of the payload",
+      "minLength": 1,
+      "maxLength": 255,
+      "examples": ["Initial Prompt", "Follow-up Analysis", "Summary Generation"]
+    },
+    "temperature": {
+      "type": "number",
+      "description": "LLM temperature setting (controls randomness)",
+      "minimum": 0,
+      "maximum": 1,
+      "default": 0.6,
+      "examples": [0.7, 0.5, 0.9]
+    },
+    "response_length": {
+      "type": "integer",
+      "description": "Maximum length of response in tokens",
+      "minimum": 1,
+      "default": 1000,
+      "examples": [1000, 2000, 4000]
+    },
+    "llm_port": {
+      "type": "integer",
+      "description": "Port number of the LLM instance to use",
+      "minimum": 1,
+      "maximum": 65535,
+      "default": 5001,
+      "examples": [5001, 5002, 5003]
+    },
+    "model_format": {
+      "type": "string",
+      "description": "Format to use for this model",
+      "enum": ["default", "mistral", "llama", "llama_chat", "command-r"],
+      "default": "default",
+      "examples": ["mistral", "llama", "command-r"]
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the payload was created (auto-generated)"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the payload was last updated (auto-updated)"
+    },
+    "blocks": {
+      "type": "array",
+      "description": "Blocks included in this payload (not stored in payloads table)",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer" },
+          "order_index": { "type": "integer" }
+        }
+      }
+    }
+  },
+  "required": ["name"],
+  "additionalProperties": false,
+  "database": {
+    "table": "payloads",
+    "sql": "CREATE TABLE IF NOT EXISTS payloads (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, temperature REAL DEFAULT 0.6, response_length INTEGER DEFAULT 1000, llm_port INTEGER DEFAULT 5001, model_format TEXT DEFAULT 'default', created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP)"
+  },
+  "examples": [
+    {
+      "id": 1,
+      "name": "Initial Analysis",
+      "temperature": 0.7,
+      "response_length": 1000,
+      "llm_port": 5001,
+      "model_format": "mistral",
+      "created_at": "2023-09-20T14:00:00Z",
+      "updated_at": "2023-09-20T14:00:00Z",
+      "blocks": [
+        { "id": 1, "order_index": 0 },
+        { "id": 2, "order_index": 1 }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,287 @@
+{
+  "project": {
+    "name": "LLM Orchestration",
+    "description": "A system for orchestrating interactions with multiple LLM instances",
+    "version": "1.0.0"
+  },
+  "codebase": {
+    "primaryLanguage": "JavaScript",
+    "framework": "Express.js",
+    "database": "SQLite",
+    "frontend": "HTML/CSS/JavaScript"
+  },
+  "structure": {
+    "mainComponents": [
+      {
+        "name": "LLM Service",
+        "path": "services/llm.js",
+        "description": "Core service for communicating with LLM instances",
+        "modificationFrequency": "medium",
+        "modificationComplexity": "high"
+      },
+      {
+        "name": "Workflow Execution",
+        "path": "routes/execute.js",
+        "description": "Handles workflow execution and orchestration",
+        "modificationFrequency": "medium",
+        "modificationComplexity": "high"
+      },
+      {
+        "name": "Database Layer",
+        "path": "config/database.js",
+        "description": "Database connection and schema management",
+        "modificationFrequency": "low",
+        "modificationComplexity": "high"
+      },
+      {
+        "name": "Main Server",
+        "path": "server.js",
+        "description": "Main application entry point and server setup",
+        "modificationFrequency": "low",
+        "modificationComplexity": "medium"
+      }
+    ],
+    "secondaryComponents": [
+      {
+        "name": "Block Routes",
+        "path": "routes/blocks.js",
+        "description": "API endpoints for block management",
+        "modificationFrequency": "low",
+        "modificationComplexity": "low"
+      },
+      {
+        "name": "Payload Routes",
+        "path": "routes/payloads.js",
+        "description": "API endpoints for payload management",
+        "modificationFrequency": "low",
+        "modificationComplexity": "low"
+      },
+      {
+        "name": "Workflow Routes",
+        "path": "routes/workflows.js",
+        "description": "API endpoints for workflow management",
+        "modificationFrequency": "low",
+        "modificationComplexity": "low"
+      },
+      {
+        "name": "Run Routes",
+        "path": "routes/runs.js",
+        "description": "API endpoints for run results and history",
+        "modificationFrequency": "low",
+        "modificationComplexity": "low"
+      },
+      {
+        "name": "LLM Routes",
+        "path": "routes/llm.js",
+        "description": "API endpoints for LLM management",
+        "modificationFrequency": "low",
+        "modificationComplexity": "low"
+      },
+      {
+        "name": "Database Routes",
+        "path": "routes/database.js",
+        "description": "API endpoints for database management",
+        "modificationFrequency": "low",
+        "modificationComplexity": "medium"
+      }
+    ]
+  },
+  "extensionPoints": [
+    {
+      "name": "LLM Model Formats",
+      "path": "services/llm.js",
+      "function": "formatPromptForModel",
+      "description": "Add support for new LLM model formats",
+      "example": "Add a new case to the switch statement in formatPromptForModel"
+    },
+    {
+      "name": "LLM API Endpoints",
+      "path": "services/llm.js",
+      "function": "sendPrompt",
+      "description": "Add support for new LLM API endpoints",
+      "example": "Add a new API endpoint attempt in the try/catch blocks of sendPrompt"
+    },
+    {
+      "name": "Database Schema",
+      "path": "config/database.js",
+      "function": "SCHEMA constant",
+      "description": "Modify database schema",
+      "example": "Add a new table definition to the SCHEMA object"
+    },
+    {
+      "name": "WebSocket Events",
+      "path": "routes/execute.js",
+      "function": "broadcast function",
+      "description": "Add new WebSocket event types",
+      "example": "Add a new event object to the broadcast function calls"
+    }
+  ],
+  "commonPatterns": {
+    "errorHandling": {
+      "description": "Standard error handling pattern using try/catch with specific error messages",
+      "example": "try {\n  // Operation code\n} catch (error) {\n  console.error('Operation failed:', error);\n  throw new Error(`Specific error message: ${error.message}`);\n}"
+    },
+    "asyncOperations": {
+      "description": "Async/await pattern for database operations and LLM communications",
+      "example": "async function operationName() {\n  try {\n    const result = await asyncOperation();\n    return result;\n  } catch (error) {\n    console.error('Operation failed:', error);\n    throw error;\n  }\n}"
+    },
+    "routeDefinition": {
+      "description": "Standard pattern for defining Express routes",
+      "example": "router.get('/path/:param', async (req, res) => {\n  try {\n    // Operation code\n    res.json(result);\n  } catch (error) {\n    console.error('Route handler error:', error);\n    res.status(500).json({ error: 'Error message' });\n  }\n});"
+    },
+    "databaseQueries": {
+      "description": "Pattern for database queries using the database module",
+      "example": "const result = await db.get('SELECT * FROM table WHERE id = ?', [id]);"
+    },
+    "modelFormats": {
+      "description": "Pattern for handling different LLM model formats",
+      "example": "case 'format_name':\n  // Format-specific code\n  return formattedPrompt;"
+    }
+  },
+  "namingConventions": {
+    "files": {
+      "services": "lowercase, use dash-case for multi-word names",
+      "routes": "lowercase, descriptive of the resource they handle"
+    },
+    "functions": {
+      "async": "should be prefixed with 'async' or end with 'Async'",
+      "handlers": "should be descriptive of the operation they perform"
+    },
+    "variables": {
+      "constants": "UPPER_SNAKE_CASE",
+      "objects": "camelCase, descriptive of their content"
+    }
+  },
+  "dataFlow": {
+    "workflowExecution": {
+      "description": "How data flows during workflow execution",
+      "steps": [
+        "Client initiates workflow execution via API",
+        "Server creates run record in database",
+        "Server executes payloads in sequence",
+        "Each payload combines blocks into a prompt",
+        "Variables are replaced with context from previous responses",
+        "Prompt is sent to LLM instance",
+        "Response is processed and stored",
+        "WebSocket updates are sent to client",
+        "Response is added to context for next payload",
+        "Process repeats for each payload",
+        "Run is marked as completed when all payloads are processed"
+      ]
+    }
+  },
+  "aiAssistance": {
+    "contextLabels": {
+      "description": "Labels used in comments to provide context for AI tools",
+      "labels": [
+        {
+          "name": "AI-CONTEXT",
+          "description": "Provides contextual information about code patterns, intentions, or design decisions",
+          "example": "/* AI-CONTEXT: This pattern is used throughout the codebase for consistency */"
+        },
+        {
+          "name": "AI-EXTENSION-POINT",
+          "description": "Marks areas where new functionality can be safely added",
+          "example": "/* AI-EXTENSION-POINT: Add new model formats here */"
+        },
+        {
+          "name": "AI-CAUTION",
+          "description": "Warns about areas where changes require careful consideration",
+          "example": "/* AI-CAUTION: Modifying this could break existing workflows */"
+        }
+      ]
+    },
+    "fileAnnotations": {
+      "description": "How files are annotated to assist AI understanding",
+      "annotationTypes": [
+        {
+          "name": "Header Comments",
+          "description": "File-level comments describing purpose and relationships",
+          "location": "Top of file"
+        },
+        {
+          "name": "Function Comments",
+          "description": "Comments describing function purpose, parameters, and return values",
+          "location": "Above function definitions"
+        },
+        {
+          "name": "Code Block Comments",
+          "description": "Comments describing complex code blocks or algorithms",
+          "location": "Above code blocks"
+        }
+      ]
+    },
+    "developmentFlow": {
+      "description": "Recommended flow for AI tools to assist with development",
+      "steps": [
+        "Understand project structure using filestructure.md",
+        "Review ai-config.json to understand common patterns and extension points",
+        "Read relevant documentation in docs/ directory",
+        "Locate the specific component to modify",
+        "Look for AI-CONTEXT and AI-EXTENSION-POINT comments",
+        "Make changes following established patterns",
+        "Ensure error handling is consistent with project standards",
+        "Add appropriate comments for future AI assistance"
+      ]
+    }
+  },
+  "importantFiles": [
+    {
+      "path": "filestructure.md",
+      "description": "Overview of project file structure and component descriptions"
+    },
+    {
+      "path": "docs/index.md",
+      "description": "Entry point to project documentation"
+    },
+    {
+      "path": "docs/architecture.md",
+      "description": "System architecture overview"
+    },
+    {
+      "path": "docs/api-reference.md",
+      "description": "API endpoint reference"
+    },
+    {
+      "path": "docs/llm-service.md",
+      "description": "Documentation for the LLM service"
+    },
+    {
+      "path": "ai-config.json",
+      "description": "This file - AI-friendly project configuration"
+    }
+  ],
+  "developerGuidance": {
+    "newFeatures": {
+      "description": "Guidance for implementing new features",
+      "steps": [
+        "Identify the component to modify based on ai-config.json",
+        "Look for appropriate extension points",
+        "Follow existing code patterns",
+        "Add appropriate error handling",
+        "Update documentation in docs/ directory",
+        "Add AI-CONTEXT comments for future assistance"
+      ]
+    },
+    "bugFixes": {
+      "description": "Guidance for fixing bugs",
+      "steps": [
+        "Identify the component with the bug",
+        "Review error handling patterns",
+        "Ensure database queries have proper parameter handling",
+        "Add or improve error messages",
+        "Consider adding AI-CAUTION comments where appropriate"
+      ]
+    },
+    "codeQuality": {
+      "description": "Standards for maintaining code quality",
+      "principles": [
+        "Follow existing naming conventions",
+        "Use async/await for asynchronous operations",
+        "Include proper error handling",
+        "Add descriptive comments",
+        "Use AI-specific comment labels for complex sections"
+      ]
+    }
+  }
+}

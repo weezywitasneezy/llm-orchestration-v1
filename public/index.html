@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LLM Orchestration</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Tab Navigation -->
+        <div class="tab-nav">
+            <button class="tab-button active" data-tab="blocks">Block Manager</button>
+            <button class="tab-button" data-tab="payloads">Payload Builder</button>
+            <button class="tab-button" data-tab="workflows">Workflow</button>
+            <button class="tab-button" data-tab="runs">Runs/Responses</button>
+            <button id="db-management-btn" class="db-btn">Database</button>
+        </div>
+
+        <!-- Main Content Area -->
+        <div class="main-content">
+            <!-- Tab Content -->
+            <div class="tab-content">
+                <!-- Block Manager Tab -->
+                <div id="blocks-tab" class="tab-pane active">
+                    <div class="split-view">
+                        <!-- Block List -->
+                        <div class="block-list">
+                            <div class="list-header">
+                                <h2>Blocks</h2>
+                                <button id="new-block-btn" class="create-btn">Create New Block</button>
+                            </div>
+                            <div class="search-container">
+                                <input type="text" id="block-search" placeholder="Search blocks...">
+                            </div>
+                            <div id="block-tree" class="block-tree">
+                                <!-- Block folders and items will be dynamically inserted here -->
+                            </div>
+                        </div>
+                        
+                        <!-- Block Editor -->
+                        <div class="block-editor">
+                            <h2>Edit Block</h2>
+                            <form id="block-form">
+                                <div class="form-group">
+                                    <label for="block-title">Title:</label>
+                                    <input type="text" id="block-title" name="title" placeholder="Block Title" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="block-content">Content:</label>
+                                    <textarea id="block-content" name="content" placeholder="Block Content" required></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="block-tags">Tags:</label>
+                                    <input type="text" id="block-tags" name="tags" placeholder="Tags (comma-separated)">
+                                </div>
+                                <div class="form-group">
+                                    <label for="block-folder">Folder:</label>
+                                    <input type="text" id="block-folder" name="folder_path" placeholder="Folder Path (e.g., Phase 1/Instructions)">
+                                </div>
+                                <div class="form-actions">
+                                    <button type="submit" class="save-btn">Save Block</button>
+                                    <button type="button" id="delete-block-btn" class="delete-btn">Delete Block</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Payload Builder Tab -->
+                <div id="payloads-tab" class="tab-pane">
+                    <div class="split-view">
+                        <!-- Payload List -->
+                        <div class="payload-list">
+                            <div class="list-header">
+                                <h2>Payloads</h2>
+                                <button id="new-payload-btn" class="create-btn">Create New Payload</button>
+                            </div>
+                            <div id="payload-list-container">
+                                <!-- Payload items will be dynamically inserted here -->
+                            </div>
+                        </div>
+                        
+                        <!-- Payload Editor -->
+                        <div class="payload-editor">
+                            <h2>Edit Payload</h2>
+                            <form id="payload-form">
+                                <div class="form-group">
+                                    <label for="payload-name">Name:</label>
+                                    <input type="text" id="payload-name" name="name" placeholder="Payload Name" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label>LLM Configuration:</label>
+                                    <div class="llm-config">
+                                        <div class="config-item">
+                                            <label for="payload-temperature">Temperature:</label>
+                                            <input type="number" id="payload-temperature" name="temperature" min="0.1" max="1.0" step="0.1" value="0.6">
+                                        </div>
+                                        <div class="config-item">
+                                            <label for="payload-response-length">Response Length (tokens):</label>
+                                            <input type="number" id="payload-response-length" name="response_length" min="100" step="100" value="1000">
+                                        </div>
+                                        <div class="config-item">
+                                            <label for="payload-llm-port">LLM Port:</label>
+                                            <select id="payload-llm-port" name="llm_port">
+                                                <option value="5001">5001</option>
+                                                <option value="5002">5002</option>
+                                                <option value="5003">5003</option>
+                                                <option value="5004">5004</option>
+                                            </select>
+                                        </div>
+                                        <div class="config-item">
+                                            <label for="payload-model-format">Model Format:</label>
+                                            <select id="payload-model-format" name="model_format">
+                                                <option value="default">Default</option>
+                                                <option value="mistral">Mistral</option>
+                                                <option value="llama">Llama (Instruction)</option>
+                                                <option value="llama_chat">Llama (Chat)</option>
+                                                <option value="command-r">Command-R</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Blocks:</label>
+                                    <div id="payload-blocks" class="sortable-list">
+                                        <!-- Blocks in this payload will be listed here -->
+                                    </div>
+                                    <button type="button" id="add-block-btn" class="secondary-btn">Add Block</button>
+                                </div>
+
+                                <div class="form-actions">
+                                    <button type="submit" class="save-btn">Save Payload</button>
+                                    <button type="button" id="delete-payload-btn" class="delete-btn">Delete Payload</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Workflow Tab -->
+                <div id="workflows-tab" class="tab-pane">
+                    <div class="split-view">
+                        <!-- Workflow List -->
+                        <div class="workflow-list">
+                            <div class="list-header">
+                                <h2>Workflows</h2>
+                                <button id="new-workflow-btn" class="create-btn">Create New Workflow</button>
+                            </div>
+                            <div id="workflow-list-container">
+                                <!-- Workflow items will be dynamically inserted here -->
+                            </div>
+                        </div>
+                        
+                        <!-- Workflow Editor -->
+                        <div class="workflow-editor">
+                            <h2>Edit Workflow</h2>
+                            <form id="workflow-form">
+                                <div class="form-group">
+                                    <label for="workflow-name">Name:</label>
+                                    <input type="text" id="workflow-name" name="name" placeholder="Workflow Name" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label>Payloads:</label>
+                                    <div id="workflow-payloads" class="sortable-list">
+                                        <!-- Payloads in this workflow will be listed here -->
+                                    </div>
+                                    <button type="button" id="add-workflow-payload-btn" class="secondary-btn">Add Payload</button>
+                                </div>
+
+                                <div class="form-actions">
+                                    <button type="submit" class="save-btn">Save Workflow</button>
+                                    <button type="button" id="execute-workflow-btn" class="action-btn">Execute Workflow</button>
+                                    <button type="button" id="delete-workflow-btn" class="delete-btn">Delete Workflow</button>
+                                </div>
+                            </form>
+
+                            <!-- Execution Progress (hidden by default) -->
+                            <div id="execution-progress" class="execution-progress hidden">
+                                <h3>Execution Progress</h3>
+                                <div class="progress-container">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: 0%"></div>
+                                    </div>
+                                    <div class="progress-status">0%</div>
+                                </div>
+                                <div class="current-status">
+                                    <p>Current Payload: <span id="current-payload-name">None</span></p>
+                                    <p>Status: <span id="execution-status">Waiting</span></p>
+                                </div>
+                                <div class="execution-stats">
+                                    <div>Start Time: <span id="execution-start-time">-</span></div>
+                                    <div>Elapsed Time: <span id="execution-elapsed-time">-</span></div>
+                                    <div>Tokens/s: <span id="execution-tokens-per-second">-</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Runs/Responses Tab -->
+                <div id="runs-tab" class="tab-pane">
+                    <div class="split-view">
+                        <!-- Runs List -->
+                        <div class="runs-list">
+                            <div class="list-header">
+                                <h2>Workflow Runs</h2>
+                                <div class="run-filters">
+                                    <select id="run-status-filter">
+                                        <option value="">All Statuses</option>
+                                        <option value="running">Running</option>
+                                        <option value="completed">Completed</option>
+                                        <option value="failed">Failed</option>
+                                    </select>
+                                    <input type="number" id="run-limit" value="50" min="1" max="100">
+                                </div>
+                            </div>
+                            <div id="runs-list" class="runs-container">
+                                <!-- Runs will be dynamically inserted here -->
+                            </div>
+                        </div>
+                        
+                        <!-- Run Details -->
+                        <div class="run-details">
+                            <div id="run-details" class="run-info">
+                                <!-- Run details will be dynamically inserted here -->
+                            </div>
+                            <div id="response-list" class="responses-container">
+                                <!-- Responses will be dynamically inserted here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Status Messages Pane -->
+            <div class="status-pane">
+                <div class="status-header">
+                    <h3>Status Messages</h3>
+                    <button id="clear-status-btn" class="clear-btn">Clear</button>
+                </div>
+                <div id="system-messages" class="system-messages">
+                    <!-- System messages will appear here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Load dependencies first -->
+    <script src="/js/error-handler.js"></script>
+    <script src="/js/api.js"></script>
+    <script src="/js/llm.js"></script>
+    <script src="/js/blocks.js"></script>
+    <script src="/js/payloads.js"></script>
+    <script src="/js/workflows.js"></script>
+    <script src="/js/workflow-patch.js"></script>
+    <script src="/js/llm-tester.js"></script>
+    <script src="/js/runs-manager.js"></script>
+    <script src="/js/database-manager.js"></script>
+    
+    <!-- Load main app last -->
+    <script src="/js/app.js"></script>
+</body>
+</html>

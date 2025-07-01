@@ -1,0 +1,64 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Response",
+  "description": "An LLM-generated response from a payload execution within a run",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "Unique identifier for the response (auto-generated)",
+      "examples": [1, 42, 999]
+    },
+    "run_id": {
+      "type": "integer",
+      "description": "ID of the run this response belongs to",
+      "examples": [1, 42, 999]
+    },
+    "payload_id": {
+      "type": "integer",
+      "description": "ID of the payload that generated this response",
+      "examples": [1, 42, 999]
+    },
+    "content": {
+      "type": "string",
+      "description": "The LLM-generated text content",
+      "examples": [
+        "Based on my analysis of the provided research paper, the key findings are...",
+        "The summary of the document indicates three main points..."
+      ]
+    },
+    "metadata": {
+      "type": ["string", "object", "null"],
+      "description": "JSON-serialized metadata about the response generation",
+      "examples": [
+        "{\"tokens\":150,\"promptTokens\":50,\"completionTokens\":100,\"duration_ms\":5000,\"tokens_per_second\":30}",
+        "{\"tokens\":200,\"promptTokens\":80,\"completionTokens\":120,\"finishReason\":\"length\"}"
+      ]
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the response was created (auto-generated)"
+    }
+  },
+  "required": ["run_id"],
+  "additionalProperties": false,
+  "database": {
+    "table": "responses",
+    "sql": "CREATE TABLE IF NOT EXISTS responses (id INTEGER PRIMARY KEY AUTOINCREMENT, run_id INTEGER, payload_id INTEGER, content TEXT, metadata TEXT, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, FOREIGN KEY (run_id) REFERENCES runs (id) ON DELETE CASCADE, FOREIGN KEY (payload_id) REFERENCES payloads (id) ON DELETE SET NULL)",
+    "constraints": [
+      "FOREIGN KEY (run_id) REFERENCES runs (id) ON DELETE CASCADE",
+      "FOREIGN KEY (payload_id) REFERENCES payloads (id) ON DELETE SET NULL"
+    ]
+  },
+  "examples": [
+    {
+      "id": 1,
+      "run_id": 1,
+      "payload_id": 1,
+      "content": "Based on my analysis of the provided research paper, the key findings suggest that the novel approach to machine learning described in the methodology section demonstrates significant improvements over baseline models. The paper's experimental results show a 15% increase in accuracy while reducing computational requirements by 30%.",
+      "metadata": "{\"tokens\":150,\"promptTokens\":50,\"completionTokens\":100,\"duration_ms\":5000,\"tokens_per_second\":30}",
+      "created_at": "2023-09-20T14:02:00Z"
+    }
+  ]
+}

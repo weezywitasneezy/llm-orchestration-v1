@@ -1,0 +1,46 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Payload Block",
+  "description": "A junction table linking blocks to payloads with order information",
+  "type": "object",
+  "properties": {
+    "payload_id": {
+      "type": "integer",
+      "description": "ID of the payload",
+      "examples": [1, 42, 999]
+    },
+    "block_id": {
+      "type": "integer",
+      "description": "ID of the block",
+      "examples": [1, 42, 999]
+    },
+    "order_index": {
+      "type": "integer",
+      "description": "Position of the block within the payload (0-based index)",
+      "minimum": 0,
+      "examples": [0, 1, 2]
+    }
+  },
+  "required": ["payload_id", "block_id", "order_index"],
+  "additionalProperties": false,
+  "database": {
+    "table": "payload_blocks",
+    "sql": "CREATE TABLE IF NOT EXISTS payload_blocks (payload_id INTEGER, block_id INTEGER, order_index INTEGER, FOREIGN KEY (payload_id) REFERENCES payloads (id) ON DELETE CASCADE, FOREIGN KEY (block_id) REFERENCES blocks (id) ON DELETE CASCADE)",
+    "constraints": [
+      "FOREIGN KEY (payload_id) REFERENCES payloads (id) ON DELETE CASCADE",
+      "FOREIGN KEY (block_id) REFERENCES blocks (id) ON DELETE CASCADE"
+    ]
+  },
+  "examples": [
+    {
+      "payload_id": 1,
+      "block_id": 1,
+      "order_index": 0
+    },
+    {
+      "payload_id": 1,
+      "block_id": 2,
+      "order_index": 1
+    }
+  ]
+}

@@ -1,0 +1,344 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "LLM Orchestration API Schemas",
+  "description": "JSON Schema definitions for API requests and responses",
+  "definitions": {
+    "Block": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "description": "Unique identifier for the block"
+        },
+        "title": {
+          "type": "string",
+          "description": "Title of the block"
+        },
+        "content": {
+          "type": "string",
+          "description": "Text content of the block"
+        },
+        "tags": {
+          "type": "string",
+          "description": "Comma-separated list of tags for categorization"
+        },
+        "folder_path": {
+          "type": "string",
+          "description": "Virtual folder path for organization"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When the block was created"
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When the block was last updated"
+        }
+      },
+      "required": ["id", "title"]
+    },
+    "CreateBlockRequest": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "Title of the block"
+        },
+        "content": {
+          "type": "string",
+          "description": "Text content of the block"
+        },
+        "tags": {
+          "type": "string",
+          "description": "Comma-separated list of tags for categorization"
+        },
+        "folder_path": {
+          "type": "string",
+          "description": "Virtual folder path for organization"
+        }
+      },
+      "required": ["title"]
+    },
+    "Payload": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "description": "Unique identifier for the payload"
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the payload"
+        },
+        "temperature": {
+          "type": "number",
+          "description": "LLM temperature setting (controls randomness)",
+          "default": 0.6
+        },
+        "response_length": {
+          "type": "integer",
+          "description": "Maximum length of response in tokens",
+          "default": 1000
+        },
+        "llm_port": {
+          "type": "integer",
+          "description": "Port number of the LLM instance to use",
+          "default": 5001
+        },
+        "model_format": {
+          "type": "string",
+          "description": "Format to use for this model",
+          "enum": ["default", "mistral", "llama", "llama_chat", "command-r"],
+          "default": "default"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When the payload was created"
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When the payload was last updated"
+        },
+        "blocks": {
+          "type": "array",
+          "description": "Blocks included in this payload",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": { "type": "integer" },
+              "title": { "type": "string" },
+              "content": { "type": "string" },
+              "order_index": { "type": "integer" }
+            }
+          }
+        }
+      },
+      "required": ["id", "name"]
+    },
+    "CreatePayloadRequest": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the payload"
+        },
+        "temperature": {
+          "type": "number",
+          "description": "LLM temperature setting (controls randomness)",
+          "default": 0.6
+        },
+        "response_length": {
+          "type": "integer",
+          "description": "Maximum length of response in tokens",
+          "default": 1000
+        },
+        "llm_port": {
+          "type": "integer",
+          "description": "Port number of the LLM instance to use",
+          "default": 5001
+        },
+        "model_format": {
+          "type": "string",
+          "description": "Format to use for this model",
+          "enum": ["default", "mistral", "llama", "llama_chat", "command-r"],
+          "default": "default"
+        },
+        "blocks": {
+          "type": "array",
+          "description": "IDs of blocks to include in the payload",
+          "items": {
+            "type": "integer"
+          }
+        }
+      },
+      "required": ["name"]
+    },
+    "Workflow": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "description": "Unique identifier for the workflow"
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the workflow"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When the workflow was created"
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When the workflow was last updated"
+        },
+        "payloads": {
+          "type": "array",
+          "description": "Payloads included in this workflow",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": { "type": "integer" },
+              "name": { "type": "string" },
+              "order_index": { "type": "integer" }
+            }
+          }
+        }
+      },
+      "required": ["id", "name"]
+    },
+    "CreateWorkflowRequest": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the workflow"
+        },
+        "payloads": {
+          "type": "array",
+          "description": "IDs of payloads to include in the workflow",
+          "items": {
+            "type": "integer"
+          }
+        }
+      },
+      "required": ["name"]
+    },
+    "Run": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "description": "Unique identifier for the run"
+        },
+        "workflow_id": {
+          "type": "integer",
+          "description": "ID of the workflow that was executed"
+        },
+        "status": {
+          "type": "string",
+          "description": "Current status of the run",
+          "enum": ["running", "completed", "failed", "IN_PROGRESS"]
+        },
+        "started_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When the run was started"
+        },
+        "completed_at": {
+          "type": ["string", "null"],
+          "format": "date-time",
+          "description": "When the run completed (null if still running)"
+        },
+        "metadata": {
+          "type": ["object", "null"],
+          "description": "Metadata about the run"
+        },
+        "responses": {
+          "type": "array",
+          "description": "Responses generated during this run",
+          "items": {
+            "$ref": "#/definitions/Response"
+          }
+        }
+      }
+    },
+    "ExecuteWorkflowRequest": {
+      "type": "object",
+      "properties": {
+        "workflowId": {
+          "type": "integer",
+          "description": "ID of the workflow to execute"
+        }
+      },
+      "required": ["workflowId"]
+    },
+    "ExecuteWorkflowResponse": {
+      "type": "object",
+      "properties": {
+        "runId": {
+          "type": "integer",
+          "description": "ID of the created run"
+        },
+        "message": {
+          "type": "string",
+          "description": "Status message"
+        },
+        "status": {
+          "type": "string",
+          "description": "Initial status of the run"
+        }
+      },
+      "required": ["runId", "message", "status"]
+    },
+    "Response": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "description": "Unique identifier for the response"
+        },
+        "run_id": {
+          "type": "integer",
+          "description": "ID of the run this response belongs to"
+        },
+        "payload_id": {
+          "type": "integer",
+          "description": "ID of the payload that generated this response"
+        },
+        "content": {
+          "type": "string",
+          "description": "The LLM-generated text content"
+        },
+        "metadata": {
+          "type": ["object", "null"],
+          "description": "Metadata about the response generation"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When the response was created"
+        }
+      }
+    },
+    "ErrorResponse": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string",
+          "description": "Error type"
+        },
+        "message": {
+          "type": "string",
+          "description": "Error message"
+        },
+        "details": {
+          "type": ["object", "null"],
+          "description": "Additional error details"
+        }
+      },
+      "required": ["error", "message"]
+    },
+    "WebSocketEvent": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "description": "Event type",
+          "enum": ["execution_progress", "payload_completed", "workflow_completed", "workflow_failed"]
+        },
+        "data": {
+          "type": "object",
+          "description": "Event data"
+        }
+      },
+      "required": ["type", "data"]
+    }
+  }
+}

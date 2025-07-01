@@ -1,0 +1,133 @@
+{
+  "metadata": {
+    "title": "LLM Orchestration Project Knowledge Graph",
+    "description": "Structured representation of the LLM orchestration project's components, relationships, and key information",
+    "created": "2025-03-27",
+    "version": "1.0"
+  },
+  "entities": [
+    {
+      "name": "Project Structure",
+      "entityType": "System",
+      "observations": [
+        "Node.js Express application for LLM workflow orchestration",
+        "SQLite database for persistent storage",
+        "WebSocket for real-time updates",
+        "MVC-like architecture with routes, services, and public frontend"
+      ]
+    },
+    {
+      "name": "Backend Components",
+      "entityType": "System",
+      "observations": [
+        "Express.js server in server.js",
+        "SQLite database wrapper in config/database.js",
+        "API routes for blocks, payloads, workflows, execution, llm, runs, and database",
+        "WebSocket server for real-time updates"
+      ]
+    },
+    {
+      "name": "Data Model",
+      "entityType": "System",
+      "observations": [
+        "Blocks: reusable text content pieces with tags",
+        "Payloads: collections of blocks with LLM configuration",
+        "Workflows: sequences of payloads to execute",
+        "Runs: execution records with responses",
+        "Blocks table: id, title, content, tags, folder_path, created_at, updated_at",
+        "Payloads table: id, name, temperature, response_length, llm_port, model_format, created_at, updated_at",
+        "Payload_blocks table: payload_id, block_id, order_index",
+        "Workflows table: id, name, created_at, updated_at",
+        "Workflow_payloads table: workflow_id, payload_id, order_index",
+        "Runs table: id, workflow_id, status, started_at, completed_at, metadata",
+        "Responses table: id, run_id, payload_id, content, metadata, created_at"
+      ]
+    },
+    {
+      "name": "Frontend Components",
+      "entityType": "System",
+      "observations": [
+        "Single-page application with tab-based UI",
+        "Real-time updates via WebSocket",
+        "Block Manager for creating and editing text blocks",
+        "Payload Builder for configuring LLM prompts",
+        "Workflow tab for sequencing payloads and execution",
+        "Runs tab for viewing execution history"
+      ]
+    },
+    {
+      "name": "Execution Flow",
+      "entityType": "Process",
+      "observations": [
+        "Workflows contain ordered payloads",
+        "Payloads contain ordered blocks that form prompts",
+        "Execution processes payloads sequentially",
+        "Variable substitution allows referencing previous responses",
+        "Real-time progress updates via WebSocket"
+      ]
+    },
+    {
+      "name": "Key Files",
+      "entityType": "FileGroup",
+      "observations": [
+        "server.js: Main application entry point",
+        "config/database.js: Database configuration and schema",
+        "routes/*.js: API endpoints for various resources",
+        "services/init-llm.js: LLM service integration",
+        "public/index.html: Main frontend UI",
+        "public/js/*.js: Frontend JavaScript modules"
+      ]
+    }
+  ],
+  "relationships": [
+    {
+      "from": "Project Structure",
+      "relationType": "contains",
+      "to": "Backend Components"
+    },
+    {
+      "from": "Project Structure",
+      "relationType": "contains",
+      "to": "Frontend Components"
+    },
+    {
+      "from": "Project Structure",
+      "relationType": "implements",
+      "to": "Data Model"
+    },
+    {
+      "from": "Project Structure",
+      "relationType": "executes",
+      "to": "Execution Flow"
+    },
+    {
+      "from": "Backend Components",
+      "relationType": "manages",
+      "to": "Data Model"
+    },
+    {
+      "from": "Backend Components",
+      "relationType": "orchestrates",
+      "to": "Execution Flow"
+    },
+    {
+      "from": "Frontend Components",
+      "relationType": "displays",
+      "to": "Data Model"
+    },
+    {
+      "from": "Frontend Components",
+      "relationType": "monitors",
+      "to": "Execution Flow"
+    },
+    {
+      "from": "Project Structure",
+      "relationType": "organizes",
+      "to": "Key Files"
+    }
+  ],
+  "sessionTemplate": {
+    "template": "Session Goal: [Brief description of what we're working on]\nContext Area: [Reference to which part of the system we're focusing on]\nSpecific Files: [Only list files directly relevant to the current task]\nTask Requirements: [Clear description of what we need to accomplish]\nExisting Pattern References: [Any existing patterns in your code we should follow]",
+    "example": "Session Goal: Add a new feature to cache LLM responses for identical prompts\nContext Area: Execution Flow, specifically the execute.js route and LLM service\nSpecific Files: routes/execute.js, services/init-llm.js\nTask Requirements:\n- Add a caching mechanism that checks if identical prompts have been sent before\n- Store successful responses in the database with a hash of the prompt\n- Update the execution flow to check cache before sending to LLM\n- Add an optional \"bypass_cache\" parameter for testing\n\nExisting Pattern References:\n- Follow the database transaction pattern used in other routes\n- Add appropriate WebSocket notifications for cache hits"
+  }
+}

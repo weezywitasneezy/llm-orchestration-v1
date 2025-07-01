@@ -1,0 +1,60 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Workflow",
+  "description": "A sequence of payloads to be executed in order",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "Unique identifier for the workflow (auto-generated)",
+      "examples": [1, 42, 999]
+    },
+    "name": {
+      "type": "string",
+      "description": "Name of the workflow",
+      "minLength": 1,
+      "maxLength": 255,
+      "examples": ["Research Analysis", "Content Generation", "Data Summarization"]
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the workflow was created (auto-generated)"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the workflow was last updated (auto-updated)"
+    },
+    "payloads": {
+      "type": "array",
+      "description": "Payloads included in this workflow (not stored in workflows table)",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer" },
+          "order_index": { "type": "integer" }
+        }
+      }
+    }
+  },
+  "required": ["name"],
+  "additionalProperties": false,
+  "database": {
+    "table": "workflows",
+    "sql": "CREATE TABLE IF NOT EXISTS workflows (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP)"
+  },
+  "examples": [
+    {
+      "id": 1,
+      "name": "Research Paper Analysis",
+      "created_at": "2023-09-20T14:00:00Z",
+      "updated_at": "2023-09-20T14:00:00Z",
+      "payloads": [
+        { "id": 1, "order_index": 0 },
+        { "id": 2, "order_index": 1 },
+        { "id": 3, "order_index": 2 }
+      ]
+    }
+  ]
+}

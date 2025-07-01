@@ -1,0 +1,62 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Block",
+  "description": "A reusable text block used to build prompts for LLM interactions",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "Unique identifier for the block (auto-generated)",
+      "examples": [1, 42, 999]
+    },
+    "title": {
+      "type": "string",
+      "description": "Title/name of the block",
+      "minLength": 1,
+      "maxLength": 255,
+      "examples": ["Introduction", "System Prompt", "Analysis Instructions"]
+    },
+    "content": {
+      "type": "string",
+      "description": "The text content of the block",
+      "examples": ["You are a helpful assistant tasked with analyzing scientific papers."]
+    },
+    "tags": {
+      "type": "string",
+      "description": "Comma-separated list of tags for categorization and referencing",
+      "examples": ["intro,system", "response,payload_1", "analysis,instructions"]
+    },
+    "folder_path": {
+      "type": "string",
+      "description": "Virtual folder path for organization",
+      "examples": ["Common", "Phase 1/Instructions", "Analysis/Templates"]
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the block was created (auto-generated)"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the block was last updated (auto-updated)"
+    }
+  },
+  "required": ["title"],
+  "additionalProperties": false,
+  "database": {
+    "table": "blocks",
+    "sql": "CREATE TABLE IF NOT EXISTS blocks (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL, content TEXT, tags TEXT, folder_path TEXT, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP)"
+  },
+  "examples": [
+    {
+      "id": 1,
+      "title": "Introduction",
+      "content": "You are a helpful assistant tasked with analyzing scientific papers.",
+      "tags": "intro,system",
+      "folder_path": "Common",
+      "created_at": "2023-09-20T14:00:00Z",
+      "updated_at": "2023-09-20T14:00:00Z"
+    }
+  ]
+}

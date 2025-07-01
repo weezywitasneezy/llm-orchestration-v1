@@ -1,0 +1,1110 @@
+/* Model Info Styles */
+.model-info-section {
+    margin-top: 1rem;
+    padding: 1rem;
+    background-color: #f5f9ff;
+    border: 1px solid #d0e1fd;
+    border-radius: 4px;
+}
+
+.model-info-section h3 {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+    color: var(--primary-color);
+}
+
+.model-list {
+    margin: 0;
+    padding-left: 1.5rem;
+}
+
+.model-list li {
+    margin-bottom: 0.25rem;
+}
+
+.model-info {
+    display: inline-block;
+    margin-top: 0.25rem;
+    font-weight: 500;
+    color: var(--accent-color);
+}
+
+/* Response Controls */
+#runs-tab .response-controls {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-left: auto;
+}
+
+/* Collapsible Response Styles */
+#runs-tab .response-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0;
+    padding: 0.4rem 0.75rem;
+    background-color: #f5f5f5;
+    border-radius: 4px 4px 0 0;
+    cursor: pointer;
+    min-height: 2.4rem;
+}
+
+#runs-tab .response-header:hover {
+    background-color: #e0e0e0;
+}
+
+#runs-tab .response-content {
+    background-color: white;
+    padding: 0.75rem;
+    border-top: 1px solid #ddd;
+    margin-bottom: 0;
+    max-height: calc(100vh - 350px);
+    overflow-y: auto;
+    transition: max-height 0.3s ease;
+}
+
+#runs-tab .response-content.collapsed {
+    max-height: 0;
+    padding: 0;
+    overflow: hidden;
+    border-top: none;
+}
+
+#runs-tab .response-meta.collapsed {
+    display: none;
+}
+
+#runs-tab .response-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+#runs-tab .response-title h3 {
+    margin: 0;
+    font-size: 1rem;
+    line-height: 1;
+}
+
+#runs-tab .response-header .collapse-icon {
+    font-size: 0.8rem;
+    transition: transform 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    width: 16px;
+    height: 16px;
+}
+
+#runs-tab .response-header .collapse-icon.collapsed {
+    transform: rotate(-90deg);
+}
+
+/* Copy Button Styles */
+#runs-tab .copy-button {
+    padding: 2px 6px;
+    background-color: #f0f0f0;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    font-size: 0.75rem;
+    cursor: pointer;
+    margin-left: 8px;
+    transition: background-color 0.2s;
+    display: flex;
+    align-items: center;
+}
+
+#runs-tab .copy-button:hover {
+    background-color: #e0e0e0;
+}
+
+#runs-tab .response-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    height: 1.5rem;
+}
+
+/* Base Styles */
+:root {
+    --primary-color: #2c3e50;
+    --secondary-color: #34495e;
+    --accent-color: #3498db;
+    --success-color: #2ecc71;
+    --error-color: #e74c3c;
+    --warning-color: #f1c40f;
+    --text-color: #333;
+    --border-color: #ddd;
+    --background-color: #f5f5f5;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: var(--background-color);
+}
+
+/* Layout */
+.app-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.main-content {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+}
+
+.tab-content {
+    flex: 1;
+    overflow: auto;
+    padding: 20px;
+}
+
+/* Database Button */
+.db-btn {
+    margin-left: auto;
+    padding: 0.5rem 1rem;
+    border: none;
+    background-color: var(--primary-color);
+    color: white;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+}
+
+.db-btn:hover {
+    background-color: var(--secondary-color);
+    opacity: 0.9;
+}
+
+/* Tab Navigation */
+.tab-nav {
+    display: flex;
+    gap: 0.5rem;
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 0.5rem;
+}
+
+.tab-button {
+    padding: 0.5rem 1rem;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 1rem;
+    color: var(--secondary-color);
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+.tab-button:hover {
+    background-color: var(--border-color);
+}
+
+.tab-button.active {
+    background-color: var(--accent-color);
+    color: white;
+}
+
+/* Status Messages Pane */
+.status-pane {
+    width: 300px;
+    background: #f5f5f5;
+    border-left: 1px solid #ddd;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.status-header {
+    padding: 10px 15px;
+    background: #e0e0e0;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.status-header h3 {
+    margin: 0;
+    font-size: 14px;
+    color: #333;
+}
+
+.clear-btn {
+    padding: 4px 8px;
+    font-size: 12px;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.clear-btn:hover {
+    background: #f0f0f0;
+}
+
+.system-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 10px;
+}
+
+.system-message {
+    margin-bottom: 8px;
+    padding: 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    line-height: 1.4;
+}
+
+.system-message.info {
+    background: #e3f2fd;
+    color: #1976d2;
+    border-left: 3px solid #1976d2;
+}
+
+.system-message.warning {
+    background: #fff3e0;
+    color: #f57c00;
+    border-left: 3px solid #f57c00;
+}
+
+.system-message.error {
+    background: #ffebee;
+    color: #d32f2f;
+    border-left: 3px solid #d32f2f;
+}
+
+/* Tab Content */
+.tab-content {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    overflow: hidden;
+}
+
+.tab-pane {
+    display: none;
+    height: 100%;
+    overflow: auto;
+}
+
+.tab-pane.active:not(#runs-tab) {
+    display: grid;
+}
+
+/* Make sure each tab has its own split view style */
+#blocks-tab .split-view,
+#payloads-tab .split-view,
+#workflows-tab .split-view {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 1rem;
+    height: 100%;
+}
+
+#runs-tab .split-view {
+    display: flex;
+    gap: 1rem;
+    height: 100%;
+}
+
+.list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+/* List headers specific to runs */
+#runs-tab .list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+/* Block Manager */
+.block-list {
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    background: white;
+    padding: 1rem;
+    overflow: auto;
+}
+
+.search-container {
+    margin-bottom: 1rem;
+}
+
+#block-search {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+}
+
+.block-tree {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.folder {
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 0.5rem;
+}
+
+.folder-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem;
+    background-color: var(--background-color);
+    cursor: pointer;
+}
+
+.folder-content {
+    padding: 0.5rem;
+}
+
+.block-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.block-item:hover {
+    background-color: var(--background-color);
+}
+
+.block-item.selected {
+    border-color: var(--accent-color);
+    background-color: rgba(52, 152, 219, 0.1);
+}
+
+/* Block Editor */
+.block-editor {
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    background: white;
+    padding: 1rem;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+.form-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+}
+
+/* Form Elements */
+input[type="text"],
+input[type="number"],
+textarea,
+select {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+textarea {
+    min-height: 200px;
+    resize: vertical;
+    font-family: monospace;
+}
+
+/* Buttons */
+.create-btn {
+    background-color: var(--accent-color);
+    color: white;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.save-btn {
+    background-color: var(--success-color);
+    color: white;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.delete-btn {
+    background-color: var(--error-color);
+    color: white;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.action-btn {
+    background-color: var(--accent-color);
+    color: white;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.secondary-btn {
+    background-color: var(--background-color);
+    color: var(--primary-color);
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    opacity: 0.9;
+}
+
+button:disabled {
+    background-color: var(--border-color);
+    cursor: not-allowed;
+}
+
+/* LLM Configuration */
+.llm-config {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+/* Sortable Lists */
+.sortable-list {
+    min-height: 100px;
+    border: 1px dashed var(--border-color);
+    border-radius: 4px;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.payload-block, .workflow-payload {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+    background-color: white;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    cursor: grab;
+}
+
+.payload-block:active, .workflow-payload:active {
+    cursor: grabbing;
+}
+
+/* Payload Styles */
+.payload-list, .workflow-list, .run-list {
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    background: white;
+    padding: 1rem;
+    overflow: auto;
+}
+
+.payload-item, .workflow-item, .run-item {
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.payload-item:hover, .workflow-item:hover, .run-item:hover {
+    background-color: var(--background-color);
+}
+
+.payload-item.selected, .workflow-item.selected, .run-item.selected {
+    border-color: var(--accent-color);
+    background-color: rgba(52, 152, 219, 0.1);
+}
+
+/* Execution Progress */
+.execution-progress {
+    margin-top: 2rem;
+    padding: 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    background-color: white;
+}
+
+.execution-progress.hidden {
+    display: none;
+}
+
+.progress-container {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 1rem 0;
+}
+
+.progress-bar {
+    flex-grow: 1;
+    height: 20px;
+    background-color: var(--border-color);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background-color: var(--success-color);
+    transition: width 0.3s ease;
+}
+
+.progress-status {
+    min-width: 40px;
+    text-align: right;
+}
+
+.current-status {
+    margin: 1rem 0;
+}
+
+.execution-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-color);
+}
+
+/* Run Details */
+.run-details {
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    background: white;
+    padding: 1rem;
+}
+
+.run-details.hidden {
+    display: none;
+}
+
+.run-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.run-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+#runs-tab .delete-btn {
+    background: none;
+    border: none;
+    color: var(--error-color);
+    font-size: 1.5rem;
+    line-height: 1;
+    padding: 0.25rem 0.5rem;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+#runs-tab .delete-btn:hover {
+    background-color: rgba(231, 76, 60, 0.1);
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    background-color: var(--background-color);
+    padding: 1rem;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+}
+
+.run-responses {
+    margin-top: 1.5rem;
+}
+
+.response-item {
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    margin-bottom: 1rem;
+    overflow: hidden;
+}
+
+.response-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    background-color: var(--background-color);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.response-content {
+    padding: 1rem;
+    white-space: pre-wrap;
+    font-family: monospace;
+    font-size: 0.9rem;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.stat-card {
+    padding: 1rem;
+    background-color: var(--background-color);
+    border-radius: 4px;
+    text-align: center;
+}
+
+.stat-label {
+    font-size: 0.9rem;
+    color: var(--secondary-color);
+    margin-bottom: 0.5rem;
+}
+
+.stat-value {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+/* Modal Styles */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: white;
+    width: 80%;
+    max-width: 800px;
+    max-height: 80vh;
+    border-radius: 4px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-content h3 {
+    padding: 1rem;
+    margin: 0;
+    background-color: var(--accent-color);
+    color: white;
+}
+
+.modal-content .search-container {
+    padding: 1rem;
+    background-color: var(--background-color);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.block-selector-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1rem;
+    min-height: 300px;
+    max-height: 50vh;
+}
+
+.block-selector-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.block-selector-item:hover {
+    background-color: var(--background-color);
+    border-color: var(--accent-color);
+}
+
+.modal-actions {
+    padding: 1rem;
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    background-color: var(--background-color);
+    border-top: 1px solid var(--border-color);
+}
+
+.empty-message {
+    padding: 1rem;
+    text-align: center;
+    color: var(--secondary-color);
+    font-style: italic;
+    margin: 2rem auto;
+    background-color: #f8f9fa;
+    border-radius: 4px;
+    border: 1px dashed #e0e0e0;
+}
+
+/* Utility Classes */
+.hidden {
+    display: none !important;
+}
+
+/* Workflow Payload Items */
+.workflow-payload-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+    background-color: white;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+}
+
+.workflow-payload-item .payload-order {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    background-color: var(--accent-color);
+    color: white;
+    border-radius: 50%;
+    font-weight: bold;
+}
+
+.workflow-payload-item .payload-name {
+    flex-grow: 1;
+    margin: 0 1rem;
+}
+
+.workflow-payload-item .payload-controls {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.workflow-payload-item .btn {
+    background: none;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    padding: 0.25rem 0.5rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.workflow-payload-item .btn:hover {
+    background-color: var(--background-color);
+}
+
+.workflow-payload-item .btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.workflow-payload-item .btn.move-up:hover,
+.workflow-payload-item .btn.move-down:hover {
+    color: var(--accent-color);
+    border-color: var(--accent-color);
+}
+
+.workflow-payload-item .btn.remove-payload:hover {
+    color: var(--error-color);
+    border-color: var(--error-color);
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Override general tab pane rules for runs tab */
+.tab-pane.active#runs-tab {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Fix for runs tab to ensure it behaves like other tabs */
+#runs-tab.tab-pane {
+    display: none;
+}
+
+#runs-tab.tab-pane.active {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Runs Tab Styles */
+/* Fully hide all run elements outside of runs tab */
+#blocks-tab .runs-list,
+#payloads-tab .runs-list,
+#workflows-tab .runs-list,
+#blocks-tab .run-details,
+#payloads-tab .run-details,
+#workflows-tab .run-details {
+    display: none !important;
+}
+
+/* Hide runs content in other tabs */
+.runs-list, 
+.run-details, 
+.runs-container, 
+.responses-container,
+.runs-list .list-header,
+.run-list-container {
+    display: none;
+}
+
+.runs-list .list-header h2 {
+    display: none;
+}
+
+#runs-tab .runs-list .list-header h2 {
+    display: block;
+}
+
+#runs-tab .runs-list, 
+#runs-tab .run-details {
+    display: flex;
+    flex-direction: column;
+}
+
+#runs-tab .runs-container, 
+#runs-tab .responses-container {
+    display: block;
+}
+
+/* Clean up any duplicate styles for runs tab */
+#runs-tab {
+    /* Removed duplicate height declaration */
+    /* Removed duplicate display declaration */
+    /* height and display now handled by .tab-pane.active#runs-tab rule */
+}
+
+#runs-tab .split-view {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+    gap: 20px;
+}
+
+#runs-tab .runs-list {
+    width: 40%;
+    border-right: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+#runs-tab .runs-container {
+    flex: 1;
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+#runs-tab .run-details {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+#runs-tab .run-info {
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#runs-tab .responses-container {
+    flex: 1;
+    overflow-y: auto;
+    padding-right: 5px;
+}
+
+#runs-tab .run-item {
+    padding: 1rem;
+    border-bottom: 1px solid var(--border-color);
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+#runs-tab .run-item:hover {
+    background-color: var(--background-color);
+}
+
+#runs-tab .run-item.running {
+    border-left: 4px solid var(--accent-color);
+}
+
+#runs-tab .run-item.completed {
+    border-left: 4px solid var(--success-color);
+}
+
+#runs-tab .run-item.failed {
+    border-left: 4px solid var(--error-color);
+}
+
+#runs-tab .run-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+#runs-tab .run-header h3 {
+    margin: 0;
+    font-size: 1.1rem;
+}
+
+#runs-tab .run-status {
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+#runs-tab .run-status.running {
+    background-color: #e3f2fd;
+    color: #1976d2;
+}
+
+#runs-tab .run-status.completed {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+}
+
+#runs-tab .run-status.failed {
+    background-color: #ffebee;
+    color: #c62828;
+}
+
+#runs-tab .run-meta {
+    display: flex;
+    gap: 1rem;
+    font-size: 0.9rem;
+    color: #666;
+    flex-basis: 100%;
+    margin-top: 0.5rem;
+}
+
+#runs-tab .run-title-section {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex: 1;
+}
+
+#runs-tab .run-filters {
+    display: flex;
+    gap: 0.5rem;
+}
+
+#runs-tab .response-item {
+    margin-bottom: 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    background-color: var(--background-color);
+}
+
+#runs-tab .response-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+#runs-tab .response-header h3 {
+    margin: 0;
+    font-size: 1.1rem;
+}
+
+#runs-tab .response-time {
+    color: #666;
+    font-size: 0.85rem;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+}
+
+/* Response content styling moved up to consolidated rule */
+
+#runs-tab .response-content pre {
+    margin: 0;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+#runs-tab .response-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    font-size: 0.85rem;
+    color: #666;
+    padding: 0.5rem 0.75rem;
+    background-color: #f0f0f0;
+    border-top: 1px solid #ddd;
+}
