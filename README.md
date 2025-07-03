@@ -20,6 +20,30 @@ A robust, modular system for orchestrating complex workflows with multiple Large
 
 The system is built around these core concepts:
 
+## 🖼️ GUI Overview
+
+The following screenshots illustrate the main features and workflow of the LLM Orchestration app:
+
+### Block Manager
+Manage and edit reusable prompt blocks.
+![Block Manager](docs/images/block-manager.png)
+
+### Payload Builder
+Configure LLM settings and assemble blocks into payloads.
+![Payload Builder](docs/images/payload-builder.png)
+
+### Workflow Builder
+Chain payloads into multi-step workflows.
+![Workflow Builder](docs/images/workflow-builder.png)
+
+### Workflow Runs & Responses
+Track execution progress and review LLM responses for each workflow run.
+![Workflow Runs](docs/images/workflow-runs.png)
+
+### LLM Connectivity Test
+Test and validate connectivity to your LLM instances directly from the UI.
+![LLM Connectivity Test](docs/images/llm-tester.png)
+
 - **Blocks:** Reusable text snippets for prompts
 - **Payloads:** Collections of blocks + LLM config (single LLM call)
 - **Workflows:** Ordered sequences of payloads (multi-step chains)

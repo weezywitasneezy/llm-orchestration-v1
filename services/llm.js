@@ -25,8 +25,8 @@ class LLMService {
         // Map to track active LLM ports and their status
         this.llmInstances = new Map();
         
-        // Default host (localhost)
-        this.defaultHost = 'localhost';
+        // Default host (host.docker.internal for Docker compatibility)
+        this.defaultHost = process.env.LLM_HOST || 'host.docker.internal';
         
         // Default LLM configuration
         this.defaultConfig = {

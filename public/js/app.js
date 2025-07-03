@@ -164,6 +164,17 @@ class App {
                 this.databaseManager.showModal();
             });
         }
+
+        // Initialize LLM Tester button
+        const llmTesterBtn = document.getElementById('llm-tester-btn');
+        if (llmTesterBtn && window.LLMTester) {
+            llmTesterBtn.addEventListener('click', () => {
+                if (!this.llmTester) {
+                    this.llmTester = new window.LLMTester(this);
+                }
+                this.llmTester.showTestModal();
+            });
+        }
         
         // Initialize clear status button
         const clearStatusBtn = document.getElementById('clear-status-btn');
