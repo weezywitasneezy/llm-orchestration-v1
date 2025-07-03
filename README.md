@@ -25,23 +25,23 @@ The system is built around these core concepts:
 
 <h3>Block Manager</h3>
 <p>Manage and edit reusable prompt blocks.</p>
-<img src="docs/images/block-manager.png" alt="Block Manager" width="800"/>
+<img src="docs/images/Blocks.png" alt="Block Manager" width="800"/>
 
 <h3>Payload Builder</h3>
 <p>Configure LLM settings and assemble blocks into payloads.</p>
-<img src="docs/images/payload-builder.png" alt="Payload Builder" width="800"/>
+<img src="docs/images/Payloads.png" alt="Payload Builder" width="800"/>
 
 <h3>Workflow Builder</h3>
 <p>Chain payloads into multi-step workflows.</p>
-<img src="docs/images/workflow-builder.png" alt="Workflow Builder" width="800"/>
+<img src="docs/images/workflow50.png" alt="Workflow Builder" width="800"/>
 
 <h3>Workflow Runs & Responses</h3>
 <p>Track execution progress and review LLM responses for each workflow run.</p>
-<img src="docs/images/workflow-runs.png" alt="Workflow Runs" width="800"/>
+<img src="docs/images/responses.png" alt="Workflow Runs" width="800"/>
 
 <h3>LLM Connectivity Test</h3>
 <p>Test and validate connectivity to your LLM instances directly from the UI.</p>
-<img src="docs/images/llm-tester.png" alt="LLM Connectivity Test" width="800"/>
+<img src="docs/images/connectivity test.png" alt="LLM Connectivity Test" width="800"/>
 
 - **Blocks:** Reusable text snippets for prompts
 - **Payloads:** Collections of blocks + LLM config (single LLM call)
