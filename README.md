@@ -22,27 +22,26 @@ The system is built around these core concepts:
 
 ## 🖼️ GUI Overview
 
-The following screenshots illustrate the main features and workflow of the LLM Orchestration app:
 
-### Block Manager
-Manage and edit reusable prompt blocks.
-![Block Manager](docs/images/block-manager.png)
+<h3>Block Manager</h3>
+<p>Manage and edit reusable prompt blocks.</p>
+<img src="docs/images/block-manager.png" alt="Block Manager" width="800"/>
 
-### Payload Builder
-Configure LLM settings and assemble blocks into payloads.
-![Payload Builder](docs/images/payload-builder.png)
+<h3>Payload Builder</h3>
+<p>Configure LLM settings and assemble blocks into payloads.</p>
+<img src="docs/images/payload-builder.png" alt="Payload Builder" width="800"/>
 
-### Workflow Builder
-Chain payloads into multi-step workflows.
-![Workflow Builder](docs/images/workflow-builder.png)
+<h3>Workflow Builder</h3>
+<p>Chain payloads into multi-step workflows.</p>
+<img src="docs/images/workflow-builder.png" alt="Workflow Builder" width="800"/>
 
-### Workflow Runs & Responses
-Track execution progress and review LLM responses for each workflow run.
-![Workflow Runs](docs/images/workflow-runs.png)
+<h3>Workflow Runs & Responses</h3>
+<p>Track execution progress and review LLM responses for each workflow run.</p>
+<img src="docs/images/workflow-runs.png" alt="Workflow Runs" width="800"/>
 
-### LLM Connectivity Test
-Test and validate connectivity to your LLM instances directly from the UI.
-![LLM Connectivity Test](docs/images/llm-tester.png)
+<h3>LLM Connectivity Test</h3>
+<p>Test and validate connectivity to your LLM instances directly from the UI.</p>
+<img src="docs/images/llm-tester.png" alt="LLM Connectivity Test" width="800"/>
 
 - **Blocks:** Reusable text snippets for prompts
 - **Payloads:** Collections of blocks + LLM config (single LLM call)
